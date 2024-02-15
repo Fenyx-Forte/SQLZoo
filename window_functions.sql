@@ -41,10 +41,23 @@ WITH temp AS (
     FROM ge
     WHERE constituency BETWEEN 'S14000021' AND 'S14000026'
         AND yr  = 2017
-    ORDER BY constituency, posn;
+    ORDER BY constituency, posn
 )
 SELECT temp.constituency, temp.party
 FROM temp
-WHERE temp.posn = 1
+WHERE temp.posn = 1;
 
 -- Task 6
+WITH temp AS (
+    SELECT party, 
+        RANK() OVER (PARTITION BY constituency ORDER BY votes DESC) AS posn
+    FROM ge
+    WHERE LEFT(constituency, 1) = "S"
+        AND yr  = 2017
+    ORDER BY constituency, posn
+)
+SELECT temp.party,
+    COUNT(1)
+FROM temp
+WHERE temp.posn = 1
+GROUP BY temp.party;
