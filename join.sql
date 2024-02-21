@@ -3,10 +3,30 @@ SELECT matchid, player
 FROM goal
 WHERE teamid = "GER";
 
+-- New
+select
+    goal.matchid
+    , goal.player
+from
+    goal
+where
+    goal.teamid = "GER";
+
 -- Task 2
 SELECT id, stadium, team1, team2
 FROM game
 where id = 1012;
+
+-- New
+select
+    game.id
+    , game.stadium
+    , game.team1
+    , game.team2
+from
+    game
+where
+    game.id = 1012;
 
 -- Task 3
 SELECT player, teamid, stadium, mdate
@@ -14,6 +34,19 @@ FROM game
 JOIN goal ON (game.id = goal.matchid)
 WHERE teamid = "GER";
 
+-- New
+select
+    goal.player
+    , goal.teamid
+    , game.stadium
+    , game.mdate
+from
+    game
+join
+    goal
+        on (game.id = goal.matchid)
+where
+    goal.teamid = "GER";
 
 -- Task 4
 SELECT team1, team2, player
@@ -21,12 +54,38 @@ FROM game
 JOIN goal ON (game.id = goal.matchid)
 WHERE player LIKE "Mario%";
 
+-- New
+select
+    game.team1
+    , game.team2
+    , goal.player
+from
+    game
+join
+    goal
+        on (game.id = goal.matchid)
+where
+    goal.player like "Mario%";
+
 -- Task 5
 SELECT player, teamid, coach, gtime
 FROM goal
 JOIN eteam ON (goal.teamid = eteam.id)
 WHERE gtime<=10;
 
+-- New
+select
+    goal.player
+    , goal.teamid
+    , eteam.coach
+    , goal.gtime
+from
+    goal
+join
+    eteam
+        on (goal.teamid = eteam.id)
+where
+    goal.gtime <= 10;
 
 -- Task 6
 SELECT mdate, teamname
@@ -64,8 +123,6 @@ GROUP BY stadium
 ORDER BY stadium;
 
 -- Task 11
--- For every match involving 'POL', show the matchid, 
--- date and the number of goals scored.
 SELECT matchid, mdate, COUNT(teamid)
 FROM game
 JOIN goal ON game.id = goal.matchid
@@ -74,8 +131,6 @@ GROUP BY matchid;
 
 
 -- Task 12
--- For every match where 'GER' scored, show matchid, 
--- match date and the number of goals scored by 'GER'
 SELECT matchid, mdate, COUNT(matchid)
 FROM game
 JOIN goal ON game.id = goal.matchid
@@ -83,21 +138,19 @@ WHERE teamid = "GER"
 GROUP BY teamid, matchid;
 
 -- Task 13
--- List every match with the goals scored by each team as shown.
--- This will use "CASE WHEN"
 SELECT mdate, 
     team1,
     SUM(
-    CASE
-        WHEN teamid = team1 THEN 1
-        ELSE 0
-    END) AS score1,
+        CASE
+            WHEN teamid = team1 THEN 1
+            ELSE 0
+        END) AS score1,
     team2,
     SUM(
-    CASE
-        WHEN teamid = team2 THEN 1
-        ELSE 0
-    END) AS score2
+        CASE
+            WHEN teamid = team2 THEN 1
+            ELSE 0
+        END) AS score2
 FROM game
 LEFT JOIN goal ON game.id = goal.matchid
 GROUP BY mdate, team1, team2

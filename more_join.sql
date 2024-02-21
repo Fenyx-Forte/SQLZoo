@@ -99,6 +99,38 @@ WHERE casting.ord = 1
             ON casting.actorid = actor.id
         WHERE actor.name = "Julie Andrews"
     );
+
+-- New
+with julie_andrews as(
+    select
+        c.movieid
+    from
+        casting as c
+    join
+        actor as a
+            on c.actorid = a.id
+    where
+        a.name = "Julie Andrews"
+)
+select
+    m.title
+    , a.name
+from
+    movie as m
+join
+    casting as c
+        on m.id = c.movieid
+join
+    actor as a
+        on c.actorid = a.id
+where
+    c.ord = 1
+    and m.id in 
+        (select
+            julie_andrews.movieid
+        from
+            julie_andrews);
+            
 -- Task 13
 SELECT actor.name
 FROM actor

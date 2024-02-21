@@ -67,3 +67,31 @@ FROM nss AS nss_a
 WHERE question = "Q01"
     AND institution LIKE "%Manchester%"
 GROUP BY institution;
+
+-- New
+with nss_b as(
+    select
+        nss.sample
+        , nss.institution
+    from
+        nss
+    where
+        nss.subject = "(8) Computer Science"
+        and nss.question = "Q01"
+)
+select
+    nss.institution
+    , sum(nss.sample)
+    , (select
+            nss_b.sample
+        from
+            nss_b
+        where
+            nss.institution = nss_b.institution) as comp
+from
+    nss
+where
+    nss.question = "Q01"
+    and nss.institution like "%Manchester%"
+group by
+    nss.institution;
