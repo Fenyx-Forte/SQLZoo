@@ -219,3 +219,12 @@ order by
   , table_begin.end_name asc
   , table_end.begin_num asc;
 
+
+/*
+SELF JOIN QUIZ
+Q1- c)
+
+Q2- e)
+
+Q3- d)
+*/
