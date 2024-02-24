@@ -1,1 +1,1 @@
-Minhas soluções dos exercícios de SQL do site SQLZoo (https://www.sqlzoo.net/wiki/SQL_Tutorial)
+Saiba mais em meu [Portfólio](https://fenyx-forte.github.io/sqlzoo.html)
